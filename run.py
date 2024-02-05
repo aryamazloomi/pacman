@@ -33,6 +33,31 @@ class GameController(object):
         self.fruitCaptured = []
         self.fruitNode = None
         self.mazedata = MazeData()
+    
+
+    def show_menu(self):
+        menu_font = pygame.font.Font(None, 36)
+        menu_running = True
+        while menu_running:
+            self.screen.fill(BLACK)
+            play_text = menu_font.render('Press 1 to Play as Player', True, WHITE)
+            ai_text = menu_font.render('Press 2 to Watch AI Play', True, WHITE)
+            self.screen.blit(play_text, (100, 200))
+            self.screen.blit(ai_text, (100, 250))
+            pygame.display.update()
+
+            for event in pygame.event.get():
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_1:
+                        self.mode = "player"
+                        menu_running = False
+                    elif event.key == pygame.K_2:
+                        self.mode = "AI"
+                        menu_running = False
+                elif event.type == QUIT:
+                    pygame.quit()
+                    exit()
+
 
     def setBackground(self):
         self.background_norm = pygame.surface.Surface(SCREENSIZE).convert()
@@ -271,6 +296,7 @@ class GameController(object):
 
 if __name__ == "__main__":
     game = GameController()
+    game.show_menu()
     game.startGame()
     while True:
         game.update()
